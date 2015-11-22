@@ -1,0 +1,65 @@
+# depslib dependency file v1.0
+1447599833 source:d:\cryptography\main.cpp
+	<bits/stdc++.h>
+
+1448120238 source:e:\projects\cryptography\factorization.cpp
+	"factorization.h"
+	"help_functions.h"
+
+1448120183 e:\projects\cryptography\factorization.h
+	"config.h"
+
+1448124799 e:\projects\cryptography\config.h
+	<bits/stdc++.h>
+
+1448185994 e:\projects\cryptography\help_functions.h
+	"config.h"
+
+1448186070 source:e:\projects\cryptography\help_functions.cpp
+	"help_functions.h"
+
+1448193881 source:e:\projects\cryptography\main.cpp
+	"config.h"
+	"help_functions.h"
+	"factorization.h"
+	"discrete_logarithm.h"
+
+1448107492 e:\projects\cryptography\help_functions.cpp
+	"help_functions.h"
+
+1448195722 source:e:\projects\cryptography\discrete_logarithm.cpp
+	"discrete_logarithm.h"
+	"help_functions.h"
+
+1448183915 e:\projects\cryptography\discrete_logarithm.h
+	"config.h"
+
+1448222711 source:e:\programs\projects\cryptography\discrete_logarithm.cpp
+	"discrete_logarithm.h"
+	"help_functions.h"
+
+1448213293 e:\programs\projects\cryptography\discrete_logarithm.h
+	"config.h"
+
+1448223304 e:\programs\projects\cryptography\config.h
+	<bits/stdc++.h>
+
+1448185994 e:\programs\projects\cryptography\help_functions.h
+	"config.h"
+
+1448120238 source:e:\programs\projects\cryptography\factorization.cpp
+	"factorization.h"
+	"help_functions.h"
+
+1448120183 e:\programs\projects\cryptography\factorization.h
+	"config.h"
+
+1448186070 source:e:\programs\projects\cryptography\help_functions.cpp
+	"help_functions.h"
+
+1448222883 source:e:\programs\projects\cryptography\main.cpp
+	"config.h"
+	"help_functions.h"
+	"factorization.h"
+	"discrete_logarithm.h"
+
