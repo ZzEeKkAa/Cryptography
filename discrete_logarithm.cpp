@@ -136,11 +136,53 @@ ll GetLogarithmByPollard(ll a, ll n, ll b){
 }
 
 ll GetLogarithmIndexing(ll a, ll n, ll b){
-    vector<ll> B;
-    BuildSieveOfEratosthenes(n/3,B);
+    vector<ll> B,p;
+    BuildSieveOfEratosthenes(12,p);
+    B.push_back(p[0]);
+    B.push_back(p[1]);
+    B.push_back(p[2]);
+    B.push_back(p[4]);
     int t = B.size();
 
-    //for()
+    vector<vector<ll> > matrix;
+    vector<int> m_r(t+1,-1), m_c;
+    vector<ll> vect;
+
+    ll k;
+    while(matrix.size()<t){
+        k=rand()%n;
+        if(isSmooth(pow(a,k,n),B,vect)){
+            vect.push_back(k);
+            if(AddToGaussSystem(matrix,m_c,m_r,vect,n-1)) cout<<"Added:"<<endl;
+            else cout<<"Tried to add:"<<endl;
+            for(auto& e:vect)
+                cout<<e<<" ";
+            cout<<endl;
+            cout<<"__________________________"<<endl;
+
+            for(auto& row: matrix){
+                for(auto& el: row)
+                    cout<<el<<" ";
+                cout<<endl;
+            }
+            cout<<"__________________________"<<endl;
+        }
+    }
+
+    for(bool smooth = false; !smooth; ){
+        k=rand()%n;
+        smooth=isSmooth((b*pow(a,k,n))%n,B,vect);
+    }
+
+    ll x = -k;
+    for(int i=0; i<t; ++i){
+        cout<<vect[i]<<endl;
+        cout<<m_r[i]<<endl;
+        cout<<matrix[m_r[i]][t]<<endl;
+        x+=vect[i]*matrix[m_r[i]][t];
+    }
+
+    return x;
 }
 
 ll GetLogarithmByPohligHellman(ll g, ll h, ll p, ll s){

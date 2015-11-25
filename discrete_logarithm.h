@@ -6,7 +6,7 @@
 ll GetLogarithmPrimitive(ll,ll,ll);
 ll GetLogarithmByShenks(ll,ll,ll);
 ll GetLogarithmByPollard(ll,ll,ll);
-ll GetLogarithmIndexing(ll,ll);
+ll GetLogarithmIndexing(ll,ll,ll);
 ll GetLogarithmByPohligHellman(ll,ll,ll,ll);
 
 ll fi(ll n);

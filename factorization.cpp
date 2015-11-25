@@ -87,7 +87,7 @@ ll GetFactorQuadraticSieve(ll n){
                 --i;
             }
         }
-        if(d==0){
+        if(a==1){
             for(auto it=vect.begin(); it<vect.end(); ++it)
                 if(*it%2) {
                     matrix.push_back(vect);
@@ -309,3 +309,61 @@ ll GetFactorByDixon(ll n){
 
     return GetFactorByDixon(n);
 }
+
+ll GetFactorByLenstra(ll a, ll b, ll x, ll y, ll w, ll v, ll n){
+    #ifdef DEBUG
+    #define DEBUG
+
+    cout<<"a = "<<a<<"; ";
+    cout<<"b = "<<b<<"; ";
+    cout<<"x = "<<x<<"; ";
+    cout<<"y = "<<y<<"; ";
+    cout<<"w = "<<w<<"; ";
+    cout<<"v = "<<v<<"; ";
+    cout<<endl;
+
+    #endif // DEBUG
+
+    ll m;
+    ll rp;
+    vector<ll> k;
+
+    vector<ll> p;
+    BuildSieveOfEratosthenes(10000,p);
+
+    for(auto r =p.begin(); *r<w; ++r){
+        m=log(v)/log(*r);
+        rp=pow(*r,m);
+        while(rp<=v) rp*=*r;
+        while(rp>v) rp/=*r;
+        k.push_back(rp);
+    }
+
+    sort(k.begin(),k.end());
+
+    point P = make_pair(x,y);
+    for(auto& ki: k){
+        P=GroupMul(a,b,ki,P,n);
+        if(P.first==LLONG_MIN) return P.second;
+    }
+
+}
+
+ll GetFactorByLenstra(ll n){
+    ll a=rand()%n;
+    ll x=rand()%n;
+    ll y=rand()%n;
+    ll b=(((y*y)%n) - ((((x*x)%n)*x)%n) - ((a*x)%n))%n; if(b<0) b+=n;
+
+    ld lg=log(n);
+    ll w = sqrt(exp(sqrt(lg*log(lg))))+1;
+    ll v = 1000; // !!!!!!
+
+    ll fac = GetFactorByLenstra(a,b,x,y,w,v,n);
+
+    //cout<<fac<<endl<<LLONG_MAX<<endl<<endl;
+    if(fac<n && fac>1) return fac;
+    return GetFactorByLenstra(n);
+}
+
+

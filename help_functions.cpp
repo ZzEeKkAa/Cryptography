@@ -46,6 +46,7 @@ ll gcd(ll a, ll b, ll&x, ll&y){
 ll inverse(ll a, ll p){
     ll x, y;
     gcd(a,p,x,y);
+    x%=p; if(x<0) x+=p;
     return x;
 }
 
@@ -112,5 +113,127 @@ bool isSmooth(ll a,vector<ll>& B, vector<ll>& powers){
     return a==1;
 }
 
+
+point GroupAdd(ll a, ll b, point P, point Q, ll n){
+    point O = make_pair(LLONG_MAX,LLONG_MAX);
+    if(P==O) return Q;
+    if(Q==O) return P;
+    if(P.first == Q.first && P.second==-Q.second) return O;
+
+    ll s,d;
+    if(P.first == Q.first){
+        if(P.second == Q.second){
+            s=((3*P.first)%n)*P.first + a;
+            d=2*P.second;
+        }else
+            return make_pair(LLONG_MIN, LLONG_MIN);
+
+    } else{
+        s=Q.second-P.second;
+        d=Q.first-P.first;
+    }
+
+
+    if(d<0) s*=-1, d*=-1;
+
+    ll x, y;
+    ll g = gcd(d,n,x,y);
+
+    if(g!=1) return make_pair(LLONG_MIN, g);
+
+    s*=x; s%=n; if(s<0) s+=n;
+
+    x=s*s-P.first-Q.first; x%=n; if(x<0) x+=n;
+    y=P.second+s*(x-P.first);
+
+    return make_pair(x,y);
+
+}
+
+point GroupMul(ll a, ll b, ll k, point P, ll n){
+    point t=P;
+    point ans=make_pair(LLONG_MAX,LLONG_MAX);
+
+    while(k) {
+        if(k&1){
+            ans=GroupAdd(a,b,ans,t,n);
+            if(ans.first==LLONG_MIN) return ans;
+        }
+        t=GroupAdd(a,b,t,t,n);
+        if(t.first==LLONG_MIN) return t;
+        k=k>>1;
+    }
+
+    return ans;
+}
+
+bool AddToGaussSystem(vector<vector<ll> >& matrix, vector<int>& m_c, vector<int>& m_r, vector<ll>const&vect, ll p){
+    const int n = matrix.size()+1;
+    const int m = vect.size();
+    matrix.push_back(vect);
+
+    ll d;
+
+    int i;
+
+    // Removing existed base elements from new vector
+    for(int j=0; j<m-1; ++j){
+        if(m_r[j]!=-1 && matrix[n-1][j]!=0){
+            i=m_r[j];
+
+            d = p - matrix[n-1][j];
+
+            for(int j0=0; j0<m; ++j0){
+                matrix[n-1][j0]+=d*matrix[i][j0]; matrix[n-1][j0]%=p;
+            }
+        }
+    }
+
+    int jb=-1;
+
+    // Checking if new vector is not repeat and if yes normalizing basis element
+    for(int j=0; j<m-1; ++j){
+        if(matrix[n-1][j]!=0){
+            jb=j;
+            m_c.push_back(j);
+            m_r[j]=n-1;
+
+            ll x, y;
+
+            ll g = gcd(matrix[n-1][j],p,x,y);
+            if(g!=1) {jb=-1; break;}
+
+            x%=p; if(x<p) x+=p;
+
+            d=x;
+
+
+            cout<<"Inversed to "<<matrix[n-1][j]<<" is "<<d<<" by mod "<<p<<endl;
+
+            for(int j0=0; j0<m; ++j0){
+                matrix[n-1][j0]*=d; matrix[n-1][j0]%=p;
+            }
+
+            break;
+        }
+    }
+
+    // Removing new base element from others vectors
+    if(jb!=-1){
+        for(int i=0; i<n-1; ++i){
+            if(matrix[i][jb]!=0){
+                d=p-matrix[i][jb];
+                for(int j=0; j<m; ++j){
+                    matrix[i][j]+=d*matrix[n-1][j];
+                    matrix[i][j]%=p;
+                }
+            }
+        }
+
+    }else matrix.pop_back();
+
+    return jb!=-1;
+
+}
 
 

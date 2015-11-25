@@ -7,5 +7,6 @@ ll GetFactorFerma(ll);
 ll GetFactorQuadraticSieve(ll);
 ll GetFactorByDixon(ll);
 ll GetFactorByPollard(ll);
+ll GetFactorByLenstra(ll);
 
 #endif // _FACTORIZATION_
