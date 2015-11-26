@@ -9,6 +9,4 @@ ll GetLogarithmByPollard(ll,ll,ll);
 ll GetLogarithmIndexing(ll,ll,ll);
 ll GetLogarithmByPohligHellman(ll,ll,ll,ll);
 
-ll fi(ll n);
-
 #endif // _DISCRETE_LOGARITHM_

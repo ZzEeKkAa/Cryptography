@@ -63,3 +63,32 @@
 	"factorization.h"
 	"discrete_logarithm.h"
 
+1448523759 source:c:\users\zeka\documents\github\cryptography\discrete_logarithm.cpp
+	"discrete_logarithm.h"
+	"help_functions.h"
+
+1448528830 c:\users\zeka\documents\github\cryptography\discrete_logarithm.h
+	"config.h"
+
+1448530343 c:\users\zeka\documents\github\cryptography\config.h
+	<bits/stdc++.h>
+
+1448523759 c:\users\zeka\documents\github\cryptography\help_functions.h
+	"config.h"
+
+1448531113 source:c:\users\zeka\documents\github\cryptography\factorization.cpp
+	"factorization.h"
+	"help_functions.h"
+
+1448529237 c:\users\zeka\documents\github\cryptography\factorization.h
+	"config.h"
+
+1448523759 source:c:\users\zeka\documents\github\cryptography\help_functions.cpp
+	"help_functions.h"
+
+1448531057 source:c:\users\zeka\documents\github\cryptography\main.cpp
+	"config.h"
+	"help_functions.h"
+	"factorization.h"
+	"discrete_logarithm.h"
+

@@ -2,6 +2,8 @@
 #include "help_functions.h"
 
 ll GetFactorFerma(ll n){
+    if(n==2) return 1;
+    if(n%2==0) return 2;
     ll x,y;
     ll d;
     ll to=(n+1)/2;
@@ -310,7 +312,7 @@ ll GetFactorByDixon(ll n){
     return GetFactorByDixon(n);
 }
 
-ll GetFactorByLenstra(ll a, ll b, ll x, ll y, ll w, ll v, ll n){
+ll GetFactorByLenstraBase(ll a, ll b, ll x, ll y, ll w, ll v, ll n, vector<ll> const& p){
     #ifdef DEBUG
     #define DEBUG
 
@@ -328,9 +330,6 @@ ll GetFactorByLenstra(ll a, ll b, ll x, ll y, ll w, ll v, ll n){
     ll rp;
     vector<ll> k;
 
-    vector<ll> p;
-    BuildSieveOfEratosthenes(10000,p);
-
     for(auto r =p.begin(); *r<w; ++r){
         m=log(v)/log(*r);
         rp=pow(*r,m);
@@ -347,23 +346,41 @@ ll GetFactorByLenstra(ll a, ll b, ll x, ll y, ll w, ll v, ll n){
         if(P.first==LLONG_MIN) return P.second;
     }
 
+    return 1;
 }
 
 ll GetFactorByLenstra(ll n){
-    ll a=rand()%n;
-    ll x=rand()%n;
-    ll y=rand()%n;
-    ll b=(((y*y)%n) - ((((x*x)%n)*x)%n) - ((a*x)%n))%n; if(b<0) b+=n;
+    vector<ll> p;
+    BuildSieveOfEratosthenes(10000,p);
 
-    ld lg=log(n);
-    ll w = sqrt(exp(sqrt(lg*log(lg))))+1;
-    ll v = 1000; // !!!!!!
+    ll a,b,x,y,v,w,lg,fac;
+    int i=0;
+    do{
+        a=rand()%n;
+        x=rand()%n;
+        y=rand()%n;
+        b=(((y*y)%n) - ((((x*x)%n)*x)%n) - ((a*x)%n))%n; if(b<0) b+=n;
 
-    ll fac = GetFactorByLenstra(a,b,x,y,w,v,n);
+        lg=log(n);
+        w = sqrt(exp(sqrt(lg*log(lg))))+1;
+        v = 1000; // !!!!!!
 
-    //cout<<fac<<endl<<LLONG_MAX<<endl<<endl;
+        fac = GetFactorByLenstraBase(a,b,x,y,w,v,n,p);
+        ++i;
+    }while( !(fac<n && fac>1) && i<100  );
+    //cout<<fac<<endl<<LLONG_MAX<<endl<<endl
     if(fac<n && fac>1) return fac;
-    return GetFactorByLenstra(n);
+    return 1;
+}
+
+void GetAllFactors(ll n, ll(*GetFactor)(ll), vector<ll>&factors){
+    ll a = (*GetFactor)(n);
+    if(a==1){
+        factors.push_back(n);
+    }else{
+        GetAllFactors(a,GetFactor,factors);
+        GetAllFactors(n/a,GetFactor,factors);
+    }
 }
 
 
