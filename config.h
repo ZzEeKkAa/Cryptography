@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//#define DEBUG
+#define DEBUG
 
 typedef long long ll;
 typedef long double ld;

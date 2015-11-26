@@ -137,11 +137,8 @@ ll GetLogarithmByPollard(ll a, ll n, ll b){
 
 ll GetLogarithmIndexing(ll a, ll n, ll b){
     vector<ll> B,p;
-    BuildSieveOfEratosthenes(12,p);
-    B.push_back(p[0]);
-    B.push_back(p[1]);
-    B.push_back(p[2]);
-    B.push_back(p[4]);
+    BuildSieveOfEratosthenes(24,p);
+    B.assign(p.begin()+1,p.end());
     int t = B.size();
 
     vector<vector<ll> > matrix;
@@ -153,19 +150,7 @@ ll GetLogarithmIndexing(ll a, ll n, ll b){
         k=rand()%n;
         if(isSmooth(pow(a,k,n),B,vect)){
             vect.push_back(k);
-            if(AddToGaussSystem(matrix,m_c,m_r,vect,n-1)) cout<<"Added:"<<endl;
-            else cout<<"Tried to add:"<<endl;
-            for(auto& e:vect)
-                cout<<e<<" ";
-            cout<<endl;
-            cout<<"__________________________"<<endl;
-
-            for(auto& row: matrix){
-                for(auto& el: row)
-                    cout<<el<<" ";
-                cout<<endl;
-            }
-            cout<<"__________________________"<<endl;
+            AddToGaussSystem(matrix,m_c,m_r,vect,n-1);
         }
     }
 
@@ -176,9 +161,9 @@ ll GetLogarithmIndexing(ll a, ll n, ll b){
 
     ll x = -k;
     for(int i=0; i<t; ++i){
-        cout<<vect[i]<<endl;
+        /*cout<<vect[i]<<endl;
         cout<<m_r[i]<<endl;
-        cout<<matrix[m_r[i]][t]<<endl;
+        cout<<matrix[m_r[i]][t]<<endl;*/
         x+=vect[i]*matrix[m_r[i]][t];
     }
 

@@ -170,11 +170,34 @@ point GroupMul(ll a, ll b, ll k, point P, ll n){
 bool AddToGaussSystem(vector<vector<ll> >& matrix, vector<int>& m_c, vector<int>& m_r, vector<ll>const&vect, ll p){
     const int n = matrix.size()+1;
     const int m = vect.size();
-    matrix.push_back(vect);
 
     ll d;
 
     int i;
+
+    #ifdef DEBUG
+    cout<<"__________________________"<<endl;
+
+    for(auto& row: matrix){
+        for(auto& el: row)
+            printf("%4lld ",el);
+        cout<<endl;
+    }
+
+    for(auto& el: m_r)
+        printf("%4d ",el);
+    cout<<endl;
+    #endif // DEBUG
+
+
+    matrix.push_back(vect);
+
+    #ifdef DEBUG
+    cout<<endl<<"Candidate:"<<endl;
+    for(auto& el: matrix[n-1])
+        printf("%4d ",el);
+    cout<<endl;
+    #endif // DEBUG
 
     // Removing existed base elements from new vector
     for(int j=0; j<m-1; ++j){
@@ -189,11 +212,19 @@ bool AddToGaussSystem(vector<vector<ll> >& matrix, vector<int>& m_c, vector<int>
         }
     }
 
+    #ifdef DEBUG
+    cout<<endl<<"After removed basis"<<endl;
+
+    for(auto& e: matrix[n-1])
+        printf("%4lld ",e);
+    cout<<endl;
+    #endif // DEBUG
+
     int jb=-1;
 
     // Checking if new vector is not repeat and if yes normalizing basis element
     for(int j=0; j<m-1; ++j){
-        if(matrix[n-1][j]!=0){
+        if(matrix[n-1][j]!=0 && m_r[j]==-1){
             jb=j;
             m_c.push_back(j);
             m_r[j]=n-1;
@@ -201,14 +232,15 @@ bool AddToGaussSystem(vector<vector<ll> >& matrix, vector<int>& m_c, vector<int>
             ll x, y;
 
             ll g = gcd(matrix[n-1][j],p,x,y);
-            if(g!=1) {jb=-1; break;}
+            if(g!=1) {
+                m_r[j]=-1;
+                jb=-1;
+                break;
+            }
 
-            x%=p; if(x<p) x+=p;
+            x%=p; if(x<0) x+=p;
 
             d=x;
-
-
-            cout<<"Inversed to "<<matrix[n-1][j]<<" is "<<d<<" by mod "<<p<<endl;
 
             for(int j0=0; j0<m; ++j0){
                 matrix[n-1][j0]*=d; matrix[n-1][j0]%=p;
@@ -217,6 +249,14 @@ bool AddToGaussSystem(vector<vector<ll> >& matrix, vector<int>& m_c, vector<int>
             break;
         }
     }
+
+    #ifdef DEBUG
+    cout<<"After inversing"<<endl;
+
+    for(auto& e: matrix[n-1])
+        printf("%4lld ",e);
+    cout<<endl;
+    #endif // DEBUG
 
     // Removing new base element from others vectors
     if(jb!=-1){
@@ -235,5 +275,4 @@ bool AddToGaussSystem(vector<vector<ll> >& matrix, vector<int>& m_c, vector<int>
     return jb!=-1;
 
 }
-
 
