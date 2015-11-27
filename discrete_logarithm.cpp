@@ -54,11 +54,11 @@ ll GetLogarithmByShenks(ll g, ll n, ll b){
             if(t==ans[0]) {x-=i; break;}
             t*=g; t%=n;
         }
+        x%=n-1; if(x<0) x+=n-1;
         return x;
     }
     return -1;
 }
-
 
 ll GetLogarithmByPollard(ll a, ll n, ll b){
     vector<ll> x(1,1),pa(1,0),pb(1,0);
@@ -131,14 +131,15 @@ ll GetLogarithmByPollard(ll a, ll n, ll b){
             #endif // DEBUG
             if(b==pow(a,ans,n)) break;
         }
+
+        ans%=n-1; if(ans<0) ans+=n-1;
         return ans;
     } else return GetLogarithmByPollard(a,n,b);
 }
 
 ll GetLogarithmIndexing(ll a, ll n, ll b){
     vector<ll> B,p;
-    BuildSieveOfEratosthenes(24,p);
-    B.assign(p.begin()+1,p.end());
+    BuildSieveOfEratosthenes(10,B);
     int t = B.size();
 
     vector<vector<ll> > matrix;
@@ -167,6 +168,7 @@ ll GetLogarithmIndexing(ll a, ll n, ll b){
         x+=vect[i]*matrix[m_r[i]][t];
     }
 
+    x%=n-1; if(x<0) x+=n-1;
     return x;
 }
 
@@ -217,6 +219,7 @@ ll GetLogarithmByPohligHellman(ll g, ll h, ll p, ll s){
         tp/=p;
     }
 
+    x%=n-1; if(x<0) x+=n-1;
     return x;
     /*vector<ll> gp(s,g), hp(s,h);
     for(ll i=1; i<s; ++i){
